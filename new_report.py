@@ -4,17 +4,35 @@ from fpdf import FPDF
 # Local imports
 from daily_counts import plot_daily_count_states, plot_daily_count_countries
 from time_series_analysis import plot_countries, plot_states
+from create_case_maps import plot_usa_case_map, plot_global_case_map
 from helper import get_state_names, get_country_names, Mode
 
 name = 'Juansa'
 WIDTH = 210
 HEIGHT = 297
 
-def create_report(filename='tutorial.pdf'):
+def create_title(day, pdf):
+    pdf.set_font('Arial', '', 24)
+    pdf.ln(60)
+    pdf.write(5, 'Covid Analytics Report')
+    pdf.ln(10)
+    pdf.set_font('Arial', '', 16)
+    pdf.write(4, f'{day}')
+    pdf.ln(5)
+
+def create_report(day, filename='tutorial.pdf'):
     pdf = FPDF()
+    
+    # First page 
     pdf.add_page()
-    pdf.set_font('Arial', 'B', 16)
-    pdf.cell(40, 10, f'Hello my name is {name}!')
+    pdf.image('./resources/letterhead_cropped.png', 0, 0, WIDTH)
+    create_title(day, pdf)
+
+    plot_usa_case_map('usa_cases.png', day=day)
+    pdf.image('usa_cases.png', 5, 90, WIDTH-20)
+
+    # Second Page
+    pdf.add_page()
 
     # Bar chart - Cases
     states = ['New Hampshire', 'Massachusetts']
@@ -36,4 +54,5 @@ def create_report(filename='tutorial.pdf'):
     pdf.output('tuto1.pdf')
 
 if __name__ == '__main__':
-    create_report()
+    day = '10/10/20'
+    create_report(day)

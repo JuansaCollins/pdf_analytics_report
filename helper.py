@@ -6,8 +6,8 @@ class Mode:
 
 def load_relevant_data(us_data=True, mode=Mode.CASES):
 	# This can be changed to your local directory (./) for testing purposes
-	BASE_PATH = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/'
-	#BASE_PATH = './data/'
+	#BASE_PATH = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/'
+	BASE_PATH = './data/'
 	if us_data and mode == Mode.CASES:
 		PATH = BASE_PATH + 'time_series_covid19_confirmed_US.csv'
 	elif us_data and mode == Mode.DEATHS:
